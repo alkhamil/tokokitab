@@ -58,6 +58,7 @@ class Home extends CI_Controller {
                 $savedata['customer_id'] = $this->userdata->id;
                 $savedata['product_id'] = $product->id;
                 $savedata['qty'] = 1;
+                $savedata['supplier_price'] = $product->supplier_price;
                 $savedata['final_price'] = $product->final_price;
                 $savedata['weight'] = $product->weight;
                 $savedata['total_price'] = $savedata['qty'] * $product->final_price;

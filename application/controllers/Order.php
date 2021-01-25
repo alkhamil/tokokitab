@@ -22,6 +22,7 @@ class Order extends CI_Controller {
         $data['title'] = 'Order | '.$this->userdata->name;
         $data['isi'] = 'home/order';
         $data['order'] = $this->get_order($where);
+        $data['bank'] = $this->db->get('m_bank')->result_array();
         // echo json_encode($data);exit;
         $this->load->view('layout/wrapper', $data);
     }

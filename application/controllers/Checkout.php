@@ -34,15 +34,21 @@ class Checkout extends CI_Controller {
         $cart = $this->Cart_model->get_all(['customer_id'=>$this->userdata->id]);
         if ($cart) {
             $grand_total = 0;
+            $supplier_total = 0;
             foreach ($cart as $key => $c) {
                 $grand_total+=$c['total_price'];
+                $supplier_total+=$c['supplier_price']*$c['qty'];
             }
             $savedata['customer_id'] = $this->userdata->id;
             $savedata['code'] = 'TRX'.time();
             $savedata['courier_price'] = $this->input->post('courier_price', true);
+            $savedata['supplier_total'] = $supplier_total;
             $savedata['grand_total'] = $grand_total;
+            $savedata['profit'] = $grand_total - $supplier_total;
             $savedata['final_total'] = $savedata['courier_price'] + $grand_total;
             $savedata['created_date'] = date('Y-m-d H:i:s');
+
+            // echo json_encode($savedata);exit;
 
             $order_id = $this->Order_model->insert($savedata, true);
             if ($order_id) {
@@ -50,6 +56,7 @@ class Checkout extends CI_Controller {
                     $savedata_detail['order_id'] = $order_id;
                     $savedata_detail['product_id'] = $item['product_id'];
                     $savedata_detail['qty'] = $item['qty'];
+                    $savedata_detail['supplier_price'] = $item['supplier_price'];
                     $savedata_detail['final_price'] = $item['final_price'];
                     $savedata_detail['total_price'] = $item['total_price'];
                     $this->Order_detail_model->insert($savedata_detail);

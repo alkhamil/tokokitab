@@ -114,48 +114,37 @@
                         <div class="card-body">
                             <div class="row mb-3">
                                 <div class="col-md-12">
-                                    <div class="accordion" id="accordionExample">
-                                        <div class="card border-0 shadow">
-                                            <div class="card-header border-0 bg-primary" id="headingOne">
-                                                <h6 class="m-0 p-0">
-                                                    <button class="btn btn-link text-white" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                                        ATM Mandiri
-                                                    </button>
-                                                </h6>
-                                            </div>
-    
-                                            <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
-                                                <div class="card-body">
-                                                    <h5>1330013321153</h5>
-                                                    <h6>Nazmudin</h6>
+                                    <div class="accordion" id="accordionBank">
+                                        <?php foreach ($bank as $key => $item) { ?>
+                                            <div class="card border-0 shadow">
+                                                <div class="card-header border-0 bg-primary" id="headingOne<?= $key ?>">
+                                                    <h6 class="m-0 p-0">
+                                                        <a href="" class="text-white" data-toggle="collapse" data-target="#collapseOne<?= $key ?>" aria-expanded="true" aria-controls="collapseOne<?= $key ?>">
+                                                            ATM <?= $item['name'] ?>
+                                                        </a>
+                                                    </h6>
+                                                </div>
+        
+                                                <div id="collapseOne<?= $key ?>" class="collapse show" aria-labelledby="headingOne<?= $key ?>" data-parent="#accordionBank">
+                                                    <div class="card-body">
+                                                        <img class="float-right" src="<?= $item['image'] ?>" width="80" alt="">
+                                                        <h5><?= $item['no_rekening'] ?></h5>
+                                                        <h6><?= $item['atas_nama'] ?></h6>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="card border-0 shadow">
-                                            <div class="card-header bg-primary border-0" id="headingTwo">
-                                                <h6 class="m-0 p-0">
-                                                    <button class="btn text-white btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                                        ATM BCA
-                                                    </button>
-                                                </h6>
-                                            </div>
-                                            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
-                                            <div class="card-body">
-                                                <h5>7887399829</h5>
-                                                <h6>Nazmudin</h6>
-                                            </div>
-                                            </div>
-                                        </div>
+                                        <?php } ?>
                                     </div>
                                 </div>
                                 <div class="col-md-12 mt-2">
-                                    <a class="btn btn-primary btn-block border-0" style="border-radius:0"  data-toggle="collapse" href="#confirm_payment">Konfirmasi Pembayaran</a>
+                                    <a class="btn btn-outline-primary btn-block"  data-toggle="collapse" href="#confirm_payment">Konfirmasi Pembayaran</a>
                                     <div class="collapse mt-2" id="confirm_payment">
-                                        <div class="card shadow card-body border-0" style="border-radius:0">
+                                        <div class="card shadow card-body">
                                             <div class="row">
                                                 <div class="col-md-12">
                                                     <?php if ($order['is_paid'] == 0) { ?>
                                                         <form action="" id="form-confirm">
+                                                            <h6 class="text-center">Upload Bukti Transfer</h6>
                                                             <input type="hidden" name="order_id" value="<?= $order['id'] ?>">
                                                             <div class="input-group mb-3">
                                                                 <div class="custom-file">
@@ -164,9 +153,9 @@
                                                                 </div>
                                                             </div>
                                                             <div class="text-center mb-2">
-                                                                <img class="profile-pic img-fliud img-thumbnail" src="">
+                                                                <img class="profile-pic img-fliud img-thumbnail d-none" src="">
                                                             </div>
-                                                            <button type="submit" class="btn btn-primary btn-block border-0" style="border-radius:0">Submit</button>
+                                                            <button type="submit" class="btn btn-success btn-block">Submit</button>
                                                         </form>
                                                     <?php }else { ?>
                                                         <div class="text-center mb-2">
