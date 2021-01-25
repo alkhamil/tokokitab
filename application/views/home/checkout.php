@@ -3,7 +3,7 @@
     <section id="cart" class="cart">
         <div class="container" data-aos="fade-up">
             <div class="row">
-                <div class="col-md-6 mb-2">
+                <div class="col-md-7 mb-2">
                     <div class="card border-0 shadow">
                         <div class="card-header border-0 bg-primary">
                             <h5 class="p-0 m-0 text-white">Data Pengiriman</h5>
@@ -25,7 +25,8 @@
                                     <div class="row">
                                         <div class="col-md-12">
                                             <div class="form-group">
-                                                <select name="courier" id="courier" class="form-control" data-placeholder="Pilih Kurir" data-allow-clear="true" style="width:100%">
+                                                <?= ($customer->city_name == '' || $customer->city_name == null) ? 'Alamat Harus di lengkapi!' : '' ?>
+                                                <select <?= ($customer->city_name == '' || $customer->city_name == null) ? 'disabled' : '' ?> name="courier" id="courier" class="form-control" data-placeholder="Pilih Kurir" data-allow-clear="true" style="width:100%">
                                                     <option value="" disabled selected>Pilih</option>
                                                     <option value="jne">JNE</option>
                                                     <option value="pos">POS</option>
@@ -42,23 +43,20 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6 mb-2">
+                <div class="col-md-5 mb-2">
                     <div class="card border-0 shadow">
                         <div class="card-header border-0 bg-primary">
                             <h5 class="p-0 m-0 text-white">Ringkasan Belanja</h5>
                         </div>
                         <div class="card-body">
-                            <table class="table border-0 table-sm">
+                            <h6>Item</h6>
+                            <table class="table border-0 table-sm table-striped table-dashed">
                                 <tbody id="cart-view-detail">
                                     
                                 </tbody>
                             </table>
-                            <div class="row">
-                                <div class="col-lg-6 col-sm-5">
-                                    
-                                </div>
-
-                                <div class="col-lg-6 col-sm-5 ml-auto">
+                            <div class="row mt-3">
+                                <div class="col-lg-12">
                                     <table class="table table-sm table-clear">
                                         <tbody>
                                             <tr>

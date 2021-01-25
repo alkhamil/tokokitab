@@ -23,12 +23,11 @@
 
                 <div class="col-lg-3 col-md-6">
                     <div class="footer-info">
-                    <h3>Toko Kitab H.Uding</h3>
+                    <h3><?= $data['info_name'] ?></h3>
                     <p>
-                        Leuwiliang <br>
-                        Bogor<br><br>
-                        <strong>Phone:</strong> 08568029330<br>
-                        <strong>Email:</strong> info@example.com<br>
+                        <?= $data['info_address'] ?> <br><br>
+                        <strong>Phone:</strong> <?= $data['info_phone'] ?><br>
+                        <strong>Email:</strong> <?= $data['info_email'] ?><br>
                     </p>
                     <div class="social-links mt-3">
                         <a href="#" class="twitter"><i class="bx bxl-twitter"></i></a>
@@ -43,10 +42,13 @@
                 <div class="col-lg-5 col-md-6 footer-links">
                     <h4>Katalog</h4>
                     <ul>
-                    <li><i class="bx bx-chevron-right"></i> <a href="#">Kitab</a></li>
-                    <li><i class="bx bx-chevron-right"></i> <a href="#">Alat Solat</a></li>
-                    <li><i class="bx bx-chevron-right"></i> <a href="#">Minyak Solat</a></li>
-                    <li><i class="bx bx-chevron-right"></i> <a href="#">Aksesoris</a></li>
+                        <?php 
+                            $this->db->limit(5);
+                            $category = $this->db->get('m_category')->result_array();
+                        ?>
+                        <?php foreach ($category as $key => $c) { ?>
+                            <li><i class="bx bx-chevron-right"></i> <a href="<?= base_url('product?katalog='.$c['id']) ?>"><?= $c['name'] ?></a></li>
+                        <?php } ?>
                     </ul>
                 </div>
 
@@ -65,7 +67,7 @@
 
         <div class="container">
             <div class="copyright">
-                &copy; Copyright <strong><span>Toko Kitab H.Uding</span></strong>. All Rights Reserved
+                &copy; Copyright <strong><span><?= $data['info_name'] ?></span></strong>. All Rights Reserved
             </div>
         </div>
     </footer>
@@ -87,7 +89,7 @@
                 setTimeout(() => {
                     $.ajax({
                         type: "get",
-                        url: "<?= $login_modal ?>",
+                        url: "<?= base_url('home/login_modal') ?>",
                         success: function (response) {
                             content_auth.html(response);
                         }
@@ -102,7 +104,7 @@
                 setTimeout(() => {
                     $.ajax({
                         type: "get",
-                        url: "<?= $daftar_modal ?>",
+                        url: "<?= base_url('home/daftar_modal') ?>",
                         success: function (response) {
                             content_auth.html(response);
                         }
@@ -127,7 +129,7 @@
                                 setTimeout(() => {
                                     $.ajax({
                                         type: "get",
-                                        url: "<?= $login_modal ?>",
+                                        url: "<?= base_url('home/login_modal') ?>",
                                         success: function (response) {
                                             content_auth.html(response);
                                         }

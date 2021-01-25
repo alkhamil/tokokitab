@@ -1,3 +1,6 @@
+<?php 
+    $data = $this->db->get_where('m_info', ['id'=>1])->row_array();
+  ?>
 <!-- ======= Hero Section ======= -->
 <section id="hero">
     <div id="heroCarousel" class="carousel slide carousel-fade" data-ride="carousel">
@@ -7,12 +10,10 @@
       <div class="carousel-inner" role="listbox">
 
         <!-- Slide 1 -->
-        <div class="carousel-item active" style="background-image: url(<?= base_url('assets') ?>/assets/img/slide/slide-1.jpg)">
-        </div>
-
-        <!-- Slide 2 -->
-        <div class="carousel-item" style="background-image: url(<?= base_url('assets') ?>/assets/img/slide/slide-2.jpg)">
-        </div>
+        <?php foreach ($banner as $key => $item) { ?>
+            <div class="carousel-item <?= ($key==0) ? 'active' : '' ?>" style="background-image: url(<?= $item['image'] ?>); background-size:cover">
+            </div>
+        <?php } ?>
 
       </div>
 
@@ -58,9 +59,53 @@
                                         <div class="card-body">
                                             <strong><?= $item['name'] ?></strong><br>
                                             <small class="card-subtitle mb-2 text-muted"><?= $item['code'] ?></small><br>
-                                            <small class="card-subtitle mb-2 text-muted"><strong>Rp. <?= number_format($item['selling_price']) ?></strong></small>
+                                            <small class="card-subtitle mb-2 text-muted"><strong>Rp. <?= number_format($item['final_price']) ?></strong></small>
+                                            <?= ($item['stock'] > 0) ? '' : '<small class="badge badge-danger">Stock Habis</small>' ?>
                                             <div class="buy d-flex justify-content-between align-items-center">
-                                                <button type="button" id="<?= ($this->userdata) ? 'btn-cart-awal' : 'btn-login' ?>" data-id="<?= $item['id'] ?>" class="btn btn-sm btn-block btn-primary mt-3">
+                                                <button type="button" id="<?= ($this->userdata) ? 'btn-cart-awal' : 'btn-login' ?>" data-id="<?= $item['id'] ?>" class="btn btn-sm btn-block btn-primary mt-3" <?= ($item['stock'] > 0) ? '' : 'disabled' ?>>
+                                                    <i class="fas fa-shopping-cart"></i> Cart
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                <?php } ?>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="product" class="product pt-0">
+        <div class="container" data-aos="fade-up">
+            <div class="row">
+                <div class="col">
+                    <div class="bbb_main_container">
+                        <div class="bbb_viewed_title_container">
+                            <h3 class="bbb_viewed_title">Katalog Kitab</h3>
+                            <div class="bbb_viewed_nav_container">
+                                <div class="bbb_viewed_nav bbb_viewed_prev"><i class="fas fa-chevron-left"></i></div>
+                                <div class="bbb_viewed_nav bbb_viewed_next"><i class="fas fa-chevron-right"></i></div>
+                            </div>
+                        </div>
+                        <div class="bbb_viewed_slider_container">
+                            <div class="owl-carousel owl-theme bbb_viewed_slider">
+                                <?php foreach ($product as $key => $item) {?>
+                                    <div class="card" style="border-radius:0">
+                                        <img class="card-img" src="<?= $item['image'] ?>" style="height:180px; border-radius:0" alt="">
+                                        <div class="card-img-overlay d-flex justify-content-end">
+                                            <a href="#" class="card-link text-danger like">
+                                                <i class="fas fa-heart"></i>
+                                            </a>
+                                        </div>
+                                        <div class="card-body">
+                                            <strong><?= $item['name'] ?></strong><br>
+                                            <small class="card-subtitle mb-2 text-muted"><?= $item['code'] ?></small><br>
+                                            <small class="card-subtitle mb-2 text-muted"><strong>Rp. <?= number_format($item['final_price']) ?></strong></small>
+                                            <?= ($item['stock'] > 0) ? '' : '<small class="badge badge-danger">Stock Habis</small>' ?>
+                                            <div class="buy d-flex justify-content-between align-items-center">
+                                                <button type="button" id="<?= ($this->userdata) ? 'btn-cart-awal' : 'btn-login' ?>" data-id="<?= $item['id'] ?>" class="btn btn-sm btn-block btn-primary mt-3" <?= ($item['stock'] > 0) ? '' : 'disabled' ?>>
                                                     <i class="fas fa-shopping-cart"></i> Cart
                                                 </button>
                                             </div>
@@ -80,9 +125,9 @@
         <div class="container" data-aos="zoom-in">
 
         <div class="text-center">
-            <h3>Toko Kitab H.Uding</h3>
-            <p> Menjual berbagai macam kitab, minyak solat, perlengkapan ibadah dll</p>
-            <a class="cta-btn scrollto" href="<?= base_url('') ?>">Belanja Yuk..</a>
+            <h3><?= $data['info_name'] ?></h3>
+            <p><?= $data['info_about'] ?></p>
+            <a class="cta-btn scrollto" href="<?= base_url('product') ?>">Belanja Yuk...</a>
         </div>
 
         </div>

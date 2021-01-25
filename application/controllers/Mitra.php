@@ -66,7 +66,7 @@ class Mitra extends CI_Controller {
         // avatar
         if($_FILES['avatar']['tmp_name']) {
             $avatar_data = $this->upload_data('avatar');
-            if(isset($avatar_data['type']) && $avatar_data['type'] == 'failed') {
+            if(isset($avatar_data['type']) && $avatar_data['type'] == 'error') {
                 $msg = $avatar_data;
                 echo json_encode($msg);
                 exit;

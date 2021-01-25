@@ -1,14 +1,14 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
-class Product_model extends CI_Model {
+class Category_model extends CI_Model {
 
-    public $table = 'm_product';
-    public $primary_key = 'm_product.id';
-    public $order_by = 'm_product.id';
+    public $table = 'm_category';
+    public $primary_key = 'm_category.id';
+    public $order_by = 'm_category.id';
     public $order_type = 'DESC';
-    public $search_field = 'm_product.name';
-    public $column_order = ['m_product.name'];
-    public $column_search = ['m_product.name'];
+    public $search_field = 'm_category.id';
+    public $column_order = ['m_category.id'];
+    public $column_search = ['m_category.id'];
 
     public function __construct()
     {
@@ -233,23 +233,6 @@ class Product_model extends CI_Model {
         
         $q = $this->db->delete($this->table);
         return $q;
-    }
-
-    public function get_count() {
-        return $this->db->count_all($this->table);
-    }
-
-    public function get_product($limit, $start, $where = null, $q = null) {
-        $this->db->limit($limit, $start);
-        if ($where) {
-            $this->db->where($where);
-        }
-        if($q) {
-            $this->db->like("LOWER(".$this->search_field.")", strtolower($q));
-        }
-        $query = $this->db->get($this->table);
-
-        return $query->result();
     }
     
 }

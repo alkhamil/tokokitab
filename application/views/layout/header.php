@@ -10,8 +10,11 @@
   <meta content="" name="keywords">
 
   <!-- Favicons -->
-  <link href="<?= base_url('assets') ?>/assets/img/favicon.png" rel="icon">
-  <link href="<?= base_url('assets') ?>/assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+  <?php 
+    $data = $this->db->get_where('m_info', ['id'=>1])->row_array();
+  ?>
+  <link href="<?= $data['info_icon'] ?>" rel="icon">
+  <link href="<?= $data['info_icon'] ?>" rel="apple-touch-icon">
 
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Roboto:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
@@ -42,6 +45,10 @@
   <script src="<?= base_url('assets') ?>/assets/vendor/aos/aos.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
+  <link rel="stylesheet" href="<?= base_url('assets/assets/vendor/datatables/dataTables.bootstrap4.css');?>">
+  <script src="<?= base_url('assets/assets/vendor/datatables/jquery.dataTables.min.js');?>"></script>
+  <script src="<?= base_url('assets/assets/vendor/datatables/dataTables.bootstrap4.min.js');?>"></script>
+
   <link rel="stylesheet" href="<?= base_url('assets/assets/vendor/daterangepicker/daterangepicker.css')?>" />
   <script src="<?= base_url('assets/assets/vendor/daterangepicker/moment.min.js')?>"></script>
   <script src="<?= base_url('assets/assets/vendor/daterangepicker/daterangepicker.min.js')?>"></script>
@@ -50,8 +57,8 @@
   <script src="<?= base_url('assets/assets/vendor/select2/select2.min.js')?>"></script>
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.2.1/owl.carousel.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.2.1/owl.carousel.js"></script>
 
   <script>
       function showLoad(){
@@ -198,11 +205,8 @@
   <header id="header" class="fixed-top">
     <div class="container d-flex align-items-center">
 
-        <!-- <a href="index.html" class="logo mr-auto">
-            <img src="<?= base_url('assets') ?>/assets/img/logo.png" alt="">
-        </a> -->
         <!-- Uncomment below if you prefer to use an image logo -->
-        <h1 class="logo mr-auto"><a href="<?= base_url('/') ?>"><span class="d-none d-md-inline">Toko Kitab H.Uding</span></a></h1>
+        <h1 class="logo mr-auto"><a href="<?= base_url('/') ?>"><span class="d-none d-md-inline"><?= $data['info_name'] ?></span></a></h1>
 
         <nav class="nav-menu d-none d-lg-block">
             <ul>
@@ -211,7 +215,12 @@
                 </li>
                 <li class="drop-down"><a href="#">Katalog</a>
                     <ul>
-                        <li><a href="#">Kitab - Kitab</a></li>
+                        <?php 
+                            $category = $this->db->get('m_category')->result_array();
+                        ?>
+                        <?php foreach ($category as $key => $c) { ?>
+                            <li><a href="<?= base_url('product?katalog='.$c['id']) ?>"><?= $c['name'] ?></a></li>
+                        <?php } ?>
                     </ul>
                 </li>
                 <li><a href="#contact">Temukan Kami</a></li>

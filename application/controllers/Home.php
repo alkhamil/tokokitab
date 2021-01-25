@@ -7,6 +7,7 @@ class Home extends CI_Controller {
     {
         parent::__construct();
         $this->load->model('Product_model');
+        $this->load->model('Banner_model');
         $this->load->model('Cart_model');
     }
 
@@ -14,7 +15,8 @@ class Home extends CI_Controller {
     {
         $data['title'] = 'Toko Kitab H. Uding';
         $data['isi'] = 'home/index';
-        $data['product'] = $this->get_product();
+        $data['product'] = $this->get_product([]);
+        $data['banner'] = $this->get_banner();
 
         $data['add_cart'] = base_url('home/add_cart');
         $data['get_cart'] = base_url('home/get_cart');
@@ -24,11 +26,17 @@ class Home extends CI_Controller {
         $this->load->view('layout/wrapper', $data);
     }
 
-    public function get_product()
+    public function get_product($where = [])
     {
-        $where = [];
         $product = $this->Product_model->get_all($where);
         return $product;
+    }
+
+    public function get_banner()
+    {
+        $where = [];
+        $banner = $this->Banner_model->get_all($where);
+        return $banner;
     }
 
     public function add_cart()
