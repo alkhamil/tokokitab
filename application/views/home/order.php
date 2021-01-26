@@ -49,7 +49,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <?php foreach ($order['detail'] as $key => $item) { ?>
+                                        <?php $weight=0; foreach ($order['detail'] as $key => $item) { $weight+=$item['weight']; ?>
                                             <tr>
                                                 <td><?= $key+1 ?></td>
                                                 <td><?= $item['name'].' / '.$item['code'] ?></td>
@@ -80,6 +80,14 @@
                                                 </td>
                                                 <td class="text-right">
                                                     <strong>Rp. <?= number_format($order['courier_price']) ?></strong>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="align-middle">
+                                                    <strong>Berat</strong>
+                                                </td>
+                                                <td class="text-right">
+                                                    <strong><?= $weight ?> Gram</strong>
                                                 </td>
                                             </tr>
                                             <tr>

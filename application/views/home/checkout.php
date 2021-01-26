@@ -77,6 +77,14 @@
                                             </tr>
                                             <tr>
                                                 <td class="text-left align-middle">
+                                                    <strong>Berat</strong>
+                                                </td>
+                                                <td class="text-right">
+                                                    <strong id="weight" class="text-info">0</strong>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-left align-middle">
                                                     <strong>Grand Total</strong>
                                                 </td>
                                                 <td class="text-right">
@@ -89,6 +97,7 @@
                                 </div>
                                 <div class="col-md-12">
                                     <form action="" id="form-payment">
+                                        <input type="hidden" name="courier_name">
                                         <input type="hidden" name="courier_price">
                                         <button type="submit" class="btn btn-block btn-primary btn-payment" disabled style="cursor:not-allowed">Bayar Sekarang</button>
                                     </form>
@@ -115,10 +124,12 @@
                 $('#cart-view').html('');
                 $('#cart-view-detail').html('');
                 let count = res.length;
+                let weight = 0;
                 $('#total_item').text(count);
                 $.each(res, function (index, dt) { 
                     index+=1;
                     sub_total+=parseInt(dt.total_price);
+                    weight+=parseInt(dt.weight);
                     let cart_view_detail = `<tr>
                                                 <td align="left">`+dt.name+` / `+dt.code+` x `+dt.qty+`</td>
                                                 <td align="right"><span class="text-info">`+formatCurrency(dt.total_price)+`</span></td>
@@ -129,6 +140,7 @@
 
                 $('#sub_total').text(formatCurrency(sub_total));
                 $('#grand_total').text(formatCurrency(sub_total));
+                $('#weight').text(weight+ ' Gram');
             }
         });
     }
@@ -136,6 +148,7 @@
     $('#courier').select2().on('select2:select', function(e){
         showLoad();
         let courier = e.params.data.id;
+        $('#form-payment').find('[name=courier_name]').val(courier);
         $.ajax({
             type: "get",
             url: "<?= base_url('checkout/get_cost') ?>",
@@ -176,6 +189,7 @@
             $('#detail-courier').html('');
             hideLoad();
             $('#courier_price').text(0);
+            $('#form-payment').find('[name=courier_name]').val('');
             $('#form-payment').find('[name=courier_price]').val(0);
             $('#grand_total').text(formatCurrency(sub_total));
             $('.btn-payment').prop('disabled', true).css('cursor', 'not-allowed');

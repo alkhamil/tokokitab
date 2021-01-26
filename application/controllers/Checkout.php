@@ -41,6 +41,7 @@ class Checkout extends CI_Controller {
             }
             $savedata['customer_id'] = $this->userdata->id;
             $savedata['code'] = 'TRX'.time();
+            $savedata['courier_name'] = $this->input->post('courier_name', true);
             $savedata['courier_price'] = $this->input->post('courier_price', true);
             $savedata['supplier_total'] = $supplier_total;
             $savedata['grand_total'] = $grand_total;
@@ -56,6 +57,7 @@ class Checkout extends CI_Controller {
                     $savedata_detail['order_id'] = $order_id;
                     $savedata_detail['product_id'] = $item['product_id'];
                     $savedata_detail['qty'] = $item['qty'];
+                    $savedata_detail['weight'] = $item['weight'];
                     $savedata_detail['supplier_price'] = $item['supplier_price'];
                     $savedata_detail['final_price'] = $item['final_price'];
                     $savedata_detail['total_price'] = $item['total_price'];

@@ -98,6 +98,7 @@ class Order extends CI_Controller {
         $this->db->trans_begin();
         $where['id'] = $this->input->post('order_id');
         $update_data['is_paid'] = 1;
+        $update_data['status'] = 'sedang dalam pengecekan';
 
         if ($bukti_tf) {
             $update_data['bukti_tf'] = $bukti_tf;
@@ -114,6 +115,28 @@ class Order extends CI_Controller {
             $response = array(
                 'type' => 'success',
                 'msg' => 'Terimakasih sudah melakukan konfirmasi pembayaran, kami akan mengecek pesanan anda',
+            );
+        }
+        echo json_encode($response);
+    }
+
+    public function order_received()
+    {
+        $this->db->trans_begin();
+        $where['id'] = $this->input->get('id');
+        $update_data['status'] = 'diterima';
+        $this->Order_model->update($update_data, $where);
+        if ($this->db->trans_status() === FALSE){
+            $this->db->trans_rollback();
+            $response = array(
+                'type' => 'error',
+                'msg' => 'Gagal melakukan konfirmasi',
+            );
+        }else {
+            $this->db->trans_commit();
+            $response = array(
+                'type' => 'success',
+                'msg' => 'Terimakasih sudah melakukan konfirmasi',
             );
         }
         echo json_encode($response);
