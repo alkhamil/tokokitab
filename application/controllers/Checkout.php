@@ -63,11 +63,6 @@ class Checkout extends CI_Controller {
                     $savedata_detail['total_price'] = $item['total_price'];
                     $this->Order_detail_model->insert($savedata_detail);
 
-                    // update stok
-                    $product = $this->Product_model->get(['id'=>$item['product_id']]);
-                    $update_product['stock'] = $product->stock - $item['qty'];
-                    $this->Product_model->update($update_product, ['id'=>$item['product_id']]);
-
                     // hapus cart
                     $this->Cart_model->delete(['customer_id'=>$this->userdata->id]);
                 }

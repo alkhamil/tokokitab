@@ -86,10 +86,11 @@
                         dataType: "json",
                         success: function (res) {
                             if (res.type == 'success') {
-                                Swal.fire('Berhasil', res.msg, 'success')
+                                Swal.fire('Berhasil', res.msg, 'success');
                             }else{
-                                Swal.fire('Opppss', res.msg, 'warning')
-                            }   
+                                Swal.fire('Opppss', res.msg, 'warning');
+                            }
+                            getPage();   
                         }
                     });
                 }
